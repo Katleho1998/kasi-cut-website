@@ -12,19 +12,28 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
   <script src="/site.js" defer></script>
+  <style>
+    #contact { scroll-margin-top: 5rem; padding: clamp(3rem, 7vw, 6rem) 5%; }
+    #contact h2 { font-size: clamp(3rem, 8vw, 6rem); margin: 0 0 2rem; }
+    .contact-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 1.75rem; }
+    .contact-groups section { border-top: 1px solid currentColor; padding-top: 1rem; }
+    .contact-groups h3 { font: inherit; font-weight: 700; margin: 0 0 .4rem; }
+    .contact-groups a { display: flex; align-items: center; min-height: 44px; width: fit-content; color: inherit; text-underline-offset: .22em; }
+    .contact-groups a:hover { color: var(--red); }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="KASI CUT home"><img src="/assets/logo-black.png" alt="KASI CUT" width="158" height="53"></a>
     <nav class="desktop-nav" aria-label="Main navigation">
-      <a href="#flavours">The flavours</a><a href="#story">Our roots</a><a href="#festival">Find us</a>
+      <a href="#flavours">The flavours</a><a href="#story">Our roots</a><a href="#festival">Find us</a><a href="#contact">Contact</a>
     </nav>
     <a class="header-cta" href="#flavours">Explore the range</a>
     <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
   </header>
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
-    <a href="#flavours">The flavours</a><a href="#story">Our roots</a><a href="#festival">Find us</a>
+    <a href="#flavours">The flavours</a><a href="#story">Our roots</a><a href="#festival">Find us</a><a href="#contact">Contact</a>
   </nav>
   <main id="main">
     <section class="hero" id="top" aria-labelledby="hero-title">
@@ -69,6 +78,22 @@
     </section>
 
     <section class="last-call"><p>THE KASI IS CALLING.</p><h2>WHICH ONE’S<br><em>YOUR PICK?</em></h2><a class="button button-dark" href="#flavours">Choose your flavour</a></section>
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">CONTACT KASI CUT</h2>
+      <div class="contact-groups">
+        <section><h3>WhatsApp</h3>
+          <a href="https://wa.me/27658974018" aria-label="WhatsApp KASI CUT on 065 897 4018">065 897 4018</a>
+          <a href="https://wa.me/27643379551" aria-label="WhatsApp KASI CUT on 064 337 9551">064 337 9551</a>
+        </section>
+        <section><h3>Email</h3>
+          <a href="mailto:info@kasicuts.co.za">info@kasicuts.co.za</a>
+        </section>
+        <section><h3>Follow us</h3>
+          <a href="https://www.instagram.com/kasicuts_official/">Instagram · @kasicuts_official</a>
+          <a href="https://www.facebook.com/share/1KRAxc19v8/">Facebook · KASI CUT</a>
+        </section>
+      </div>
+    </section>
   </main>
   <footer class="footer"><img src="/assets/logo-white.png" alt="KASI CUT" width="160" height="54"><p>Big flavour. Kasi roots.</p><div><span>FICKSBURG, SOUTH AFRICA</span><button type="button" id="share-site">Share this site</button></div><small>© <span id="year">2026</span> KASI CUT.</small></footer>
 
