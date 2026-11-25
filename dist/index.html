@@ -12,6 +12,7 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
   <script src="/site.js" defer></script>
+  <script src="/analytics-client.js" defer></script>
   <style>
     #contact { scroll-margin-top: 5rem; padding: clamp(3rem, 7vw, 6rem) 5%; }
     #contact h2 { font-size: clamp(3rem, 8vw, 6rem); margin: 0 0 2rem; }
@@ -95,7 +96,7 @@
       </div>
     </section>
   </main>
-  <footer class="footer"><img src="/assets/logo-white.png" alt="KASI CUT" width="160" height="54"><p>Big flavour. Kasi roots.</p><div><span>FICKSBURG, SOUTH AFRICA</span><button type="button" id="share-site">Share this site</button></div><small>© <span id="year">2026</span> KASI CUT.</small></footer>
+  <footer class="footer"><img src="/assets/logo-white.png" alt="KASI CUT" width="160" height="54"><p>Big flavour. Kasi roots.</p><div><span>FICKSBURG, SOUTH AFRICA</span><button type="button" id="share-site">Share this site</button></div><small>© <span id="year">2026</span> KASI CUT. <a class="footer-stats" href="/stats.html">Live stats</a></small></footer>
 
   <dialog class="product-dialog" id="product-dialog" aria-labelledby="dialog-title"><button type="button" class="dialog-close" id="dialog-close" aria-label="Close product details">×</button><img id="dialog-image" src="" alt=""><div class="dialog-body"><p class="eyebrow" id="dialog-type"></p><h2 id="dialog-title"></h2><p id="dialog-description"></p><div class="dialog-meta"><span>PACK SIZE</span><strong>50 g</strong></div><button type="button" class="button button-dark" id="share-product">Share this flavour</button></div></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>

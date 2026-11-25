@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "kasi-cut-website",
+  "version": "1.0.0",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.11"
+  }
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101010">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Live stats | KASI CUT</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/stats.css">
+  <script src="/stats.js" defer></script>
+</head>
+<body>
+  <header><a href="/" aria-label="KASI CUT home"><img src="/assets/logo-white.png" alt="KASI CUT" width="130" height="45"></a><a href="/">Back to the site</a></header>
+  <main>
+    <div class="heading"><p class="eyebrow">KASI CUT / FICKSBURG</p><h1>Live stats<span>.</span></h1><p>See how people are visiting the site. Counts refresh every 15 seconds.</p><div class="status" role="status" aria-live="polite"><span class="pulse"></span><span id="status">Connecting…</span></div></div>
+    <div class="metrics" aria-label="Visitor metrics">
+      <section class="metric live"><p>Viewing right now</p><strong id="live">—</strong><small>Active in the last 2 minutes</small></section>
+      <section class="metric"><p>Views today</p><strong id="views-today">—</strong><small>Since midnight in South Africa</small></section>
+      <section class="metric"><p>Visitors today</p><strong id="visitors-today">—</strong><small>Browser sessions today</small></section>
+      <section class="metric"><p>Views in 30 days</p><strong id="views-month">—</strong><small><span id="visitors-month">—</span> visitor sessions</small></section>
+    </div>
+    <div class="panels"><section class="panel wide"><h2>Views this week</h2><div id="daily" class="bars" aria-label="Views by day"></div></section><section class="panel"><h2>Where visits came from</h2><div id="sources" class="rows"></div><p class="note">Last 30 days, where the source is available.</p></section><section class="panel"><h2>Flavours people opened</h2><div id="flavours" class="rows"></div><p class="note">Last 30 days.</p></section></div>
+    <p class="privacy">Counts begin when this dashboard goes live. We only store anonymous session IDs and aggregate interactions. We respect browser Do Not Track settings.</p>
+  </main>
+  <footer>© <span id="year"></span> KASI CUT. Big flavour. Kasi roots.</footer>
+</body>
+</html>
