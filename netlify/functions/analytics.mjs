@@ -14,7 +14,7 @@ function store() {
   return getStore({ name: 'kasi-cut-analytics', consistency: 'strong' });
 }
 
-async function record(request, analytics) {
+async function record(request, analytics, geo) {
   const origin = request.headers.get('origin');
   if (origin !== new URL(request.url).origin) return new Response(null, { status: 403 });
 
@@ -33,14 +33,16 @@ async function record(request, analytics) {
 
   const now = Date.now();
   const date = localDate(now);
-  const live = () => analytics.setJSON(`live/${date}/${event.id}`, { seen: now });
+  const country = geo?.country?.code?.toUpperCase();
+  const countryCode = /^[A-Z]{2}$/.test(country) ? country : 'ZZ';
+  const live = () => analytics.setJSON(`live/${date}/${event.id}`, { seen: now, country: countryCode });
 
   if (event.type === 'heartbeat') {
     await live();
   } else if (event.type === 'view') {
     const source = SOURCES.has(event.source) ? event.source : 'Other';
     await Promise.all([
-      analytics.set(`views/${date}/${now}-${crypto.randomUUID()}-${source}`, ''),
+      analytics.set(`views/${date}/${now}-${crypto.randomUUID()}-${source}-${countryCode}`, ''),
       analytics.set(`visitors/${date}/${event.id}`, '', { onlyIfNew: true }),
       live(),
     ]);
@@ -68,6 +70,7 @@ async function report(analytics) {
   const daily = Object.fromEntries(dates.map(date => [date, { views: 0, visitors: 0 }]));
   const sources = Object.fromEntries([...SOURCES].map(source => [source, 0]));
   const flavours = { taima: 0, malome: 0, oulady: 0 };
+  const countries = {};
 
   for (const { group, blobs } of listings) {
     for (const { key } of blobs) {
@@ -75,8 +78,12 @@ async function report(analytics) {
       if (!allowedDates.has(date)) continue;
       if (group === 'views') {
         daily[date].views++;
-        const source = detail.split('-').at(-1);
+        const parts = detail.split('-');
+        const hasCountry = /^[A-Z]{2}$/.test(parts.at(-1));
+        const source = parts.at(hasCountry ? -2 : -1);
         sources[source in sources ? source : 'Other']++;
+        const country = hasCountry ? parts.at(-1) : 'ZZ';
+        countries[country] = (countries[country] || 0) + 1;
       } else if (group === 'visitors') {
         daily[date].visitors++;
       } else {
@@ -91,11 +98,23 @@ async function report(analytics) {
     const { blobs } = await analytics.list({ prefix: `live/${date}/` });
     return blobs;
   }));
-  const active = await Promise.all(recent.flat().map(({ key }) => analytics.get(key, { type: 'json' })));
-  const live = active.filter(entry => entry && Number.isFinite(entry.seen) && entry.seen >= now - LIVE_WINDOW).length;
+  const activeKeys = recent.flat().map(({ key }) => key);
+  const active = await Promise.all(activeKeys.map(key => analytics.get(key, { type: 'json' })));
+  const activeSessions = new Map();
+  active.forEach((entry, index) => {
+    if (!entry || !Number.isFinite(entry.seen) || entry.seen < now - LIVE_WINDOW) return;
+    const id = activeKeys[index].split('/').at(-1);
+    if ((activeSessions.get(id)?.seen ?? 0) < entry.seen) activeSessions.set(id, entry);
+  });
+  const liveCountries = {};
+  for (const entry of activeSessions.values()) {
+    const country = /^[A-Z]{2}$/.test(entry.country) ? entry.country : 'ZZ';
+    liveCountries[country] = (liveCountries[country] || 0) + 1;
+  }
 
   return Response.json({
-    live,
+    live: activeSessions.size,
+    geography: { live: liveCountries, last30Days: countries },
     today: daily[dates[0]],
     last30Days: {
       views: Object.values(daily).reduce((sum, day) => sum + day.views, 0),
@@ -108,10 +127,10 @@ async function report(analytics) {
   }, { headers: jsonHeaders });
 }
 
-export default async request => {
+export default async (request, context) => {
   try {
     const analytics = store();
-    if (request.method === 'POST') return await record(request, analytics);
+    if (request.method === 'POST') return await record(request, analytics, context?.geo);
     if (request.method === 'GET') return await report(analytics);
     return new Response(null, { status: 405, headers: { Allow: 'GET, POST' } });
   } catch (error) {

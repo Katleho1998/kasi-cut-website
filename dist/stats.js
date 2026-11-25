@@ -52,6 +52,7 @@ async function refresh() {
     dailyBars(data.daily);
     rows(document.querySelector('#sources'), Object.entries(data.sources).sort((a, b) => b[1] - a[1]));
     rows(document.querySelector('#flavours'), Object.entries(data.flavours).sort((a, b) => b[1] - a[1]).map(([id, count]) => [labels[id], count]));
+    window.KasiGlobe?.update(data.geography);
     document.querySelector('#status').textContent = `Updated ${new Date(data.updatedAt).toLocaleTimeString('en-ZA', { timeZone: 'Africa/Johannesburg', hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
   } catch {
     document.querySelector('#status').textContent = 'Can’t load stats right now. Retrying…';

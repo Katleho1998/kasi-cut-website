@@ -8,6 +8,8 @@
   <title>Live stats | KASI CUT</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/stats.css">
+  <link rel="stylesheet" href="/globe.css">
+  <script src="/globe.js" defer></script>
   <script src="/stats.js" defer></script>
 </head>
 <body>
@@ -20,8 +22,13 @@
       <section class="metric"><p>Visitors today</p><strong id="visitors-today">-</strong><small>Browser sessions today</small></section>
       <section class="metric"><p>Views in 30 days</p><strong id="views-month">-</strong><small><span id="visitors-month">-</span> visitor sessions</small></section>
     </div>
+    <section class="globe-panel" aria-labelledby="globe-heading">
+      <div class="globe-heading"><div><p class="eyebrow">THE KASI CUT REACH</p><h2 id="globe-heading">Where they're watching<span>.</span></h2><p>Real visits by country. Drag to explore.</p></div><div class="globe-key"><span><i class="key-live"></i>Live now</span><span><i class="key-month"></i>Viewed in 30 days</span></div></div>
+      <div class="globe-layout"><div class="globe-stage"><canvas id="globe" role="img" aria-label="Rotating globe showing the countries visitors are viewing from"></canvas><div class="globe-tooltip" id="globe-tooltip" hidden></div></div><div class="globe-sidebar"><p class="globe-sidebar-title">LIVE LOCATIONS</p><div id="live-locations" class="country-list">Waiting for live visitors.</div><p class="globe-sidebar-title month-title">VIEWS BY COUNTRY <span>30 DAYS</span></p><div id="month-locations" class="country-list">No location data yet.</div><p class="location-note">Country estimates from Netlify. No precise location is displayed.</p></div></div>
+      <p class="map-credit">Map data <a href="https://github.com/topojson/world-atlas">Natural Earth / world-atlas</a> and <a href="https://github.com/mledoze/countries">world-countries (ODbL)</a>.</p>
+    </section>
     <div class="panels"><section class="panel wide"><h2>Views this week</h2><div id="daily" class="bars" aria-label="Views by day"></div></section><section class="panel"><h2>Where visits came from</h2><div id="sources" class="rows"></div><p class="note">Last 30 days, where the source is available.</p></section><section class="panel"><h2>Flavours people opened</h2><div id="flavours" class="rows"></div><p class="note">Last 30 days.</p></section></div>
-    <p class="privacy">Counts begin when this dashboard goes live. We record anonymous browser sessions, broad traffic sources and flavour opens for about a month. We respect browser Do Not Track settings.</p>
+    <p class="privacy">Counts begin when this dashboard goes live. We record anonymous browser sessions, country, broad traffic sources and flavour opens for about a month. We respect browser Do Not Track settings.</p>
   </main>
   <footer>c <span id="year"></span> KASI CUT. Big flavour. Kasi roots.</footer>
 </body>
